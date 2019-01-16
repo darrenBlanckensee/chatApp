@@ -4,7 +4,7 @@ const express = require('express');
 const port = process.env.PORT || 3000;
 const socketIO = require('socket.io');
 
-const {generateMessage} = require('./utils/message');
+const {generateMessage,generateLocationMessage} = require('./utils/message');
 
 var app = express();
 var server = http.createServer(app);
@@ -32,16 +32,19 @@ io.on('connection',(socket) => {
     console.log('create Message: ',newMessage);
     io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
     callback('Data was recieved');
-    // socket.broadcast.emit('newMessage', {
-    //   from: newMessage.from,
-    //   text: newMessage.text,
-    //   createdAt: new Date().getTime()
-    // });
+
+  });
+
+  socket.on('createLocationMessage', (coords) => {
+    io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
   });
 
   // socket.on('disconnect', () => {
   //   console.log('User was disconnected');
   // })
+
+//https://www.google.com/maps/@-26.1602003,28.075674199999998
+
 });
 
 //
