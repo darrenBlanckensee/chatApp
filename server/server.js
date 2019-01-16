@@ -28,10 +28,10 @@ io.on('connection',(socket) => {
 
   socket.emit('newMessage', generateMessage('Admin', 'Welcome to the Chat!'));
 
-  socket.on('createMessage', (newMessage) => {
+  socket.on('createMessage', (newMessage, callback) => {
     console.log('create Message: ',newMessage);
     io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
-
+    callback('Data was recieved');
     // socket.broadcast.emit('newMessage', {
     //   from: newMessage.from,
     //   text: newMessage.text,
