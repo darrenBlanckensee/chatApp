@@ -9,6 +9,10 @@
 
   });
 
+  socket.on('newUserJoined', function(user) {
+    console.log(`${user.name} joined.`);
+  });
+
 
   socket.on('newMessage', function(message) {
     console.log('new message: ',message);
